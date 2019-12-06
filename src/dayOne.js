@@ -8,9 +8,17 @@ const parse = string =>
   string
     .split("\n")
     .map(x => parseInt(x, 10))
-    .map(mass => Math.floor(mass / 3) - 2)
+    .map(calculateFuelRequirement)
     .reduce(addThemUp);
 
 const addThemUp = (accumulator, currentValue) => accumulator + currentValue;
+
+calculateFuelRequirement = mass => {
+  let calcFuel = Math.floor(mass / 3) - 2;
+  if (calcFuel > 0) {
+    calcFuel += calculateFuelRequirement(calcFuel);
+  }
+  return calcFuel < 0 ? 0 : calcFuel;
+};
 
 module.exports = excecute;
